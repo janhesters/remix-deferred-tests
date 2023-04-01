@@ -4,12 +4,14 @@ import { Await, Outlet, useLoaderData } from '@remix-run/react';
 import { Suspense } from 'react';
 
 export const loader = async ({}: LoaderArgs) => {
+  console.log('loading critical', new Date().toISOString());
   const critical = await new Promise(resolve =>
     setTimeout(() => resolve('hello'), 1000),
   );
+  console.log('loaded critical', new Date().toISOString());
   const nonCricital = new Promise(resolve =>
     setTimeout(() => resolve('world'), 10_000),
-  );
+    );
 
   return defer({ critical, nonCricital });
 };
